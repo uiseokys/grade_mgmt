@@ -1,0 +1,45 @@
+{% extends "core/base.html" %}
+{% block content %}
+  <h2 class="page-title">수강과목관리</h2>
+
+  <div class="row">
+    <form method="post" class="subject-form">
+      {% csrf_token %}
+      <div class="form-row">
+        <label>Subject Name</label>
+        {{ form.name }}
+        <button class="btn" type="submit">Save</button>
+      </div>
+      <div class="form-row">
+        <label>담당교수</label>
+        {{ form.professor }}
+      </div>
+      <div class="form-row">
+        <label>교재명</label>
+        {{ form.textbook }}
+      </div>
+      <div class="form-row">
+        <label>수업시간</label>
+        {{ form.schedule }}
+      </div>
+      <p class="hint">과목을 추가하면 모든 학생 성적표에 자동으로 추가됩니다.</p>
+    </form>
+
+    <div class="subject-list">
+      <ul>
+        {% for s in subjects %}
+          <li>
+            <span class="dot">•</span> {{ s.name }}
+            <span class="actions">
+              <a class="link" href="{% url 'subject_detail' s.id %}">view</a>
+              <form method="post" action="{% url 'subject_delete' s.id %}" style="display:inline">
+                {% csrf_token %}
+                <button class="link danger" type="submit" onclick="return confirm('삭제할까요?')">Delete</button>
+              </form>
+            </span>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% load static %}
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>성적관리 프로그램</title>
+  <link rel="stylesheet" href="{% static 'core/style.css' %}">
+</head>
+<body>
+  <div class="frame">
+    <aside class="sidebar">
+      <div class="sidebar-title">수강과목관리</div>
+
+      <div class="student-list">
+        {% for s in students_sidebar %}
+          <a class="student-item {% if student and student.id == s.id %}active{% endif %}"
+             href="{% url 'student_detail' s.id %}">
+            {{ s.name }}
+          </a>
+        {% endfor %}
+      </div>
+
+      <div class="sidebar-footer">
+        <a class="footer-link" href="{% url 'subject_manage' %}">수강과목관리</a>
+        <a class="footer-link" href="{% url 'student_create' %}">학생정보관리</a>
+      </div>
+    </aside>
+
+    <main class="content">
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+</body>
+</html>
