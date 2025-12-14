@@ -1,0 +1,52 @@
+{% extends "core/base.html" %}
+{% block content %}
+  <h2 class="page-title">학생 성적</h2>
+
+  <table class="tbl">
+    <thead>
+      <tr>
+        <th>학번</th>
+        <th>이름</th>
+        <th>학과</th>
+        <th>성별</th>
+        <th>관리</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ student.student_no }}</td>
+        <td>{{ student.name }}</td>
+        <td>{{ student.department }}</td>
+        <td>{{ student.get_gender_display }}</td>
+        <td>
+          <a class="btn secondary" href="{% url 'student_edit' student.id %}">수정</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="height:12px"></div>
+
+  <table class="tbl">
+    <thead>
+      <tr>
+        <th>과목</th>
+        <th>성적</th>
+        <th>과목평균</th>
+        <th>학점</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in rows %}
+        <tr>
+          <td>{{ r.subject.name }}</td>
+          <td>{{ r.score }}</td>
+          <td>{{ r.avg }}</td>
+          <td>{{ r.letter }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <p class="hint">학점 규칙: 과목평균이 80점 이상 A, 60점 이상 B, 아니면 C</p>
+{% endblock %}
